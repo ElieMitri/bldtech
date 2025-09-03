@@ -128,7 +128,7 @@ export default function Home() {
                 isScrolled ? "text-blue-600" : "text-white"
               }`}
             >
-              <Image src={Logo} />
+              <Image src={Logo} alt=""/>
             </div>
           </button>
 
@@ -415,7 +415,7 @@ export default function Home() {
             Get In Touch
           </h2>
           <p className="text-xl md:text-2xl text-gray-300 mb-20 font-light max-w-2xl mx-auto">
-            Ready to start your next project? We'd love to hear from you.
+          {"Ready to start your next project? We'd love to hear from you."}
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
