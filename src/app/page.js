@@ -266,7 +266,7 @@ export default function Home() {
         {/* Navigation */}
         <nav
           className={
-            "fixed top-2 left-1/2 -translate-x-1/2 z-50 px-4 md:px-8 py-3 md:py-4 w-[92%] md:w-[90%] max-w-5xl transition-all duration-300 rounded-xl " +
+            "fixed top-2 left-1/2 -translate-x-1/2 z-50 px-4 md:px-8 py-3 md:py-4 w-[92%] md:w-[90%] max-w-6xl transition-all duration-300 rounded-xl " +
             (isScrolled
               ? "backdrop-blur-md bg-black/10 shadow-lg"
               : "bg-transparent")
@@ -607,10 +607,28 @@ export default function Home() {
             <h2 className="text-4xl md:text-5xl font-light mb-6 text-gray-900 tracking-tight">
               Our Featured Project
             </h2>
-            <p className="text-xl md:text-2xl text-gray-600 mb-20 font-light max-w-2xl mx-auto">
+            <p className="text-xl md:text-2xl text-gray-600 mb-12 font-light max-w-2xl mx-auto">
               Precast swimming pools and architectural solutions
             </p>
 
+            {/* YouTube Video Player */}
+            <div className="mb-16 flex justify-center">
+              <div className="relative w-full max-w-4xl aspect-video rounded-2xl overflow-hidden shadow-2xl">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src="https://www.youtube.com/embed/LD6-kU-LPxU?si=PAlKSRxbUDv6t0e3&controls=1"
+                  title="Featured Project Video"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                  className="absolute inset-0"
+                />
+              </div>
+            </div>
+
+            {/* Project Gallery */}
             <div className="max-w-4xl mx-auto">
               <div
                 onClick={() => openModal(0)}
