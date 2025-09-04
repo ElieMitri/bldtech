@@ -301,10 +301,10 @@ export default function Home() {
                 "Home",
                 "About",
                 "Services",
-                "Team",
-                "Projects",
-                "Blog",
-                "Contact",
+                // "Team",
+                // "Projects",
+                // "Blog",
+                // "Contact",
               ].map((item) => (
                 <li key={item}>
                   <button
@@ -838,12 +838,16 @@ export default function Home() {
                   Ready to Start Your Project?
                 </h3>
                 <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
-                  Every great project begins with a conversation. Let's discuss
-                  how we can bring your architectural vision to life.
+                  {
+                    " Every great project begins with a conversation. Let's discuss how we can bring your architectural vision to life."
+                  }
                 </p>
                 <button
                   onClick={() =>
-                    window.open("https://wa.me/96103524144?text=Hello,%20I%20would%20like%20to%20schedule%20a%20consultation%20please!", "_blank")
+                    window.open(
+                      "https://wa.me/96103524144?text=Hello,%20I%20would%20like%20to%20schedule%20a%20consultation%20please!",
+                      "_blank"
+                    )
                   }
                   className="inline-flex items-center gap-3 px-8 py-4 bg-white text-blue-600 rounded-full hover:bg-blue-50 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg font-medium"
                 >
