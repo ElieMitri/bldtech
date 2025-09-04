@@ -1091,7 +1091,7 @@ export default function Home() {
                     alt="BLDTECH"
                     width={150}
                     height={42}
-                    className="brightness-0 invert"
+                    className=""
                   />
                 </div>
                 <p className="text-gray-400 leading-relaxed mb-6 max-w-md">
@@ -1178,9 +1178,9 @@ export default function Home() {
             {/* Bottom Bar */}
             <div className="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
               <p className="text-gray-400 text-sm">
-                © 2024 BLDTECH. All rights reserved.
+                © 2025 BLDTECH. All rights reserved.
               </p>
-              <div className="flex gap-6 text-sm">
+              {/* <div className="flex gap-6 text-sm">
                 <a
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
@@ -1199,7 +1199,7 @@ export default function Home() {
                 >
                   Cookie Policy
                 </a>
-              </div>
+              </div> */}
             </div>
           </div>
         </footer>
