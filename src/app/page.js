@@ -27,11 +27,12 @@ export default function Home() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+
+  // Build the SVG background as an encoded data URL — NO backticks anywhere.
+  const gridSvg =
+    '<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="#ffffff" fill-opacity="1"><path d="m36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/></g></g></svg>';
+  const gridDataUrl = "url('data:image/svg+xml," + encodeURIComponent(gridSvg) + "')";
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -56,8 +57,7 @@ export default function Home() {
     return () => window.removeEventListener("keydown", onKey);
   }, [mobileOpen, modalOpen]);
 
-  const handleInputChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleInputChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = () => {
     if (formData.name && formData.email && formData.message) {
@@ -77,47 +77,47 @@ export default function Home() {
 
   const project = {
     title: "Premium Pool Collection",
-    description:
-      "Modern precast swimming pools and luxury architectural solutions",
+    description: "Modern precast swimming pools and luxury architectural solutions",
     images: [img1, img2, img3],
   };
 
-  const openModal = (imageIndex = 0) => {
-    setCurrentImageIndex(imageIndex);
-    setModalOpen(true);
-  };
+  const openModal = (imageIndex = 0) => { setCurrentImageIndex(imageIndex); setModalOpen(true); };
   const closeModal = () => setModalOpen(false);
-  const nextImage = () =>
-    setCurrentImageIndex((p) => (p + 1) % project.images.length);
-  const previousImage = () =>
-    setCurrentImageIndex(
-      (p) => (p - 1 + project.images.length) % project.images.length
-    );
+  const nextImage = () => setCurrentImageIndex((p) => (p + 1) % project.images.length);
+  const previousImage = () => setCurrentImageIndex((p) => (p - 1 + project.images.length) % project.images.length);
+
+  // CSS moved to a plain string (no template literals), then injected.
+  const styles = [
+    "@keyframes fade-in-up {",
+    "  from { opacity: 0; transform: translateY(40px); }",
+    "  to { opacity: 1; transform: translateY(0); }",
+    "}",
+    "@keyframes pulse-slow {",
+    "  0%, 100% { opacity: 0.7; }",
+    "  50% { opacity: 0.9; }",
+    "}",
+    ".animate-fade-in-up { animation: fade-in-up 1s ease-out; }",
+    ".animate-fade-in-up-delay { animation: fade-in-up 1s ease-out 0.2s both; }",
+    ".animate-fade-in-up-delay-2 { animation: fade-in-up 1s ease-out 0.4s both; }",
+    ".animate-pulse-slow { animation: pulse-slow 4s ease-in-out infinite; }",
+    ":global(html) { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }",
+  ].join("\n");
 
   return (
     <>
       {/* Critical mobile meta + safe area support */}
       <Head>
-        <meta
-          name="viewport"
-          content="width=device-width,initial-scale=1,viewport-fit=cover"
-        />
+        <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
       </Head>
 
       <div className="font-sans text-gray-900 m-0 p-0 overflow-x-hidden">
         {/* Navigation */}
         <nav
-          className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 px-4 md:px-8 py-3 md:py-4 
-          w-[92%] md:w-[90%] max-w-5xl transition-all duration-300 rounded-xl
-          ${
-            isScrolled
-              ? "backdrop-blur-md bg-black/50 shadow-lg"
-              : "bg-transparent"
-          }`}
-          style={{
-            // keep clear of iPhone notch/status bar
-            paddingTop: "max(0.5rem, env(safe-area-inset-top))",
-          }}
+          className={
+            "fixed top-6 left-1/2 -translate-x-1/2 z-50 px-4 md:px-8 py-3 md:py-4 w-[92%] md:w-[90%] max-w-5xl transition-all duration-300 rounded-xl " +
+            (isScrolled ? "backdrop-blur-md bg-black/50 shadow-lg" : "bg-transparent")
+          }
+          style={{ paddingTop: "max(0.5rem, env(safe-area-inset-top))" }}
         >
           <div className="flex justify-between items-center w-full">
             <button
@@ -126,18 +126,12 @@ export default function Home() {
               aria-label="Go to top"
             >
               <div
-                className={`text-2xl font-bold uppercase tracking-wider transition-colors duration-300 ${
-                  isScrolled ? "text-blue-600" : "text-white"
-                }`}
+                className={
+                  "text-2xl font-bold uppercase tracking-wider transition-colors duration-300 " +
+                  (isScrolled ? "text-blue-600" : "text-white")
+                }
               >
-                {/* Give Image explicit sizes to avoid layout shift */}
-                <Image
-                  src={Logo}
-                  alt="BLDTECH"
-                  width={120}
-                  height={34}
-                  priority
-                />
+                <Image src={Logo} alt="BLDTECH" width={120} height={34} priority />
               </div>
             </button>
 
@@ -146,18 +140,11 @@ export default function Home() {
               {["Home", "Projects", "Contact"].map((item) => (
                 <li key={item}>
                   <button
-                    onClick={() =>
-                      scrollToSection(
-                        item.toLowerCase() === "home"
-                          ? "hero"
-                          : item.toLowerCase()
-                      )
+                    onClick={() => scrollToSection(item.toLowerCase() === "home" ? "hero" : item.toLowerCase())}
+                    className={
+                      "font-medium transition-colors duration-300 bg-transparent border-none cursor-pointer text-base " +
+                      (isScrolled ? "text-white/80 hover:text-blue-400" : "text-white/90 hover:text-white")
                     }
-                    className={`font-medium transition-colors duration-300 bg-transparent border-none cursor-pointer text-base ${
-                      isScrolled
-                        ? "text-white/80 hover:text-blue-400"
-                        : "text-white/90 hover:text-white"
-                    }`}
                   >
                     {item}
                   </button>
@@ -167,9 +154,10 @@ export default function Home() {
 
             {/* Mobile burger */}
             <button
-              className={`md:hidden inline-flex items-center justify-center w-10 h-10 rounded-md focus:outline-none transition-colors duration-300 ${
-                isScrolled ? "text-gray-100" : "text-white"
-              }`}
+              className={
+                "md:hidden inline-flex items-center justify-center w-10 h-10 rounded-md focus:outline-none transition-colors duration-300 " +
+                (isScrolled ? "text-gray-100" : "text-white")
+              }
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
               onClick={() => setMobileOpen((v) => !v)}
             >
@@ -180,22 +168,20 @@ export default function Home() {
 
         {/* Mobile Menu Overlay */}
         <div
-          className={`fixed inset-0 z-[60] md:hidden transition-all duration-200 ease-out ${
-            mobileOpen
-              ? "opacity-100 pointer-events-auto"
-              : "opacity-0 pointer-events-none"
-          }`}
+          className={
+            "fixed inset-0 z-[60] md:hidden transition-all duration-200 ease-out " +
+            (mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none")
+          }
           aria-hidden={!mobileOpen}
         >
-          {/* Full Screen Background */}
           <div
-            className={`absolute inset-0 bg-black/60 backdrop-blur-lg transition-all duration-300 ${
-              mobileOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"
-            }`}
+            className={
+              "absolute inset-0 bg-black/60 backdrop-blur-lg transition-all duration-300 " +
+              (mobileOpen ? "opacity-100 scale-100" : "opacity-0 scale-95")
+            }
             style={{ WebkitBackdropFilter: "blur(16px)" }}
             onClick={() => setMobileOpen(false)}
           />
-          {/* Centered Navigation Menu */}
           <div className="relative h-full flex items-center justify-center">
             <button
               onClick={() => setMobileOpen(false)}
@@ -209,13 +195,7 @@ export default function Home() {
                 {["Home", "Projects", "Contact"].map((item) => (
                   <li key={item}>
                     <button
-                      onClick={() =>
-                        scrollToSection(
-                          item.toLowerCase() === "home"
-                            ? "hero"
-                            : item.toLowerCase()
-                        )
-                      }
+                      onClick={() => scrollToSection(item.toLowerCase() === "home" ? "hero" : item.toLowerCase())}
                       className="text-white text-3xl font-light bg-transparent border-none cursor-pointer hover:text-blue-300 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300/50 rounded-lg px-6 py-3 hover:scale-105"
                     >
                       {item}
@@ -230,25 +210,20 @@ export default function Home() {
         {/* Hero Section */}
         <section
           id="hero"
-          // IMPORTANT: use dvh on mobile, allow bg-fixed only on md+
-          className="relative flex items-center justify-center text-center text-white overflow-hidden
-                     min-h-[100dvh] md:min-h-screen md:bg-fixed bg-cover bg-center"
+          className="relative flex items-center justify-center text-center text-white overflow-hidden min-h-[100dvh] md:min-h-screen md:bg-fixed bg-cover bg-center"
           style={{
             backgroundImage:
               "url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&h=1080&fit=crop&crop=center')",
             paddingBottom: "max(2rem, env(safe-area-inset-bottom))",
           }}
         >
-          {/* gradient wash */}
           <div className="absolute inset-0 bg-gradient-to-br from-blue-600/70 via-transparent to-gray-900/70 animate-pulse-slow" />
-
           <div className="relative max-w-4xl px-8 z-10">
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light mb-6 leading-tight tracking-tight animate-fade-in-up">
               Architects with a different approach
             </h1>
             <p className="text-lg sm:text-xl md:text-2xl font-light mb-12 opacity-90 leading-relaxed max-w-3xl mx-auto animate-fade-in-up-delay">
-              We design through our conceptual ethos that the greatest solutions
-              shine through. Enjoy your life now.
+              We design through our conceptual ethos that the greatest solutions shine through. Enjoy your life now.
             </p>
             <button
               onClick={() => scrollToSection("projects")}
@@ -258,7 +233,6 @@ export default function Home() {
               <ChevronDown size={20} className="animate-bounce" />
             </button>
           </div>
-
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
             <ChevronDown size={28} color="white" className="opacity-70" />
           </div>
@@ -267,9 +241,7 @@ export default function Home() {
         {/* Projects Section */}
         <section id="projects" className="py-32 px-8 bg-gray-50 text-center">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-light mb-6 text-gray-900 tracking-tight">
-              Our Featured Project
-            </h2>
+            <h2 className="text-4xl md:text-5xl font-light mb-6 text-gray-900 tracking-tight">Our Featured Project</h2>
             <p className="text-xl md:text-2xl text-gray-600 mb-20 font-light max-w-2xl mx-auto">
               Precast swimming pools and architectural solutions
             </p>
@@ -314,40 +286,18 @@ export default function Home() {
 
         {/* Modal */}
         {modalOpen && (
-          <div
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-sm"
-            style={{ WebkitBackdropFilter: "blur(6px)" }}
-          >
-            <button
-              onClick={closeModal}
-              className="absolute top-6 right-6 z-[110] text-white hover:text-gray-300 transition-colors duration-300 p-2 rounded-full bg-black/50 hover:bg-black/70"
-              aria-label="Close gallery"
-            >
+          <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-sm" style={{ WebkitBackdropFilter: "blur(6px)" }}>
+            <button onClick={closeModal} className="absolute top-6 right-6 z-[110] text-white hover:text-gray-300 transition-colors duration-300 p-2 rounded-full bg-black/50 hover:bg-black/70" aria-label="Close gallery">
               <X size={32} />
             </button>
-            <button
-              onClick={previousImage}
-              className="absolute left-6 top-1/2 -translate-y-1/2 z-[110] text-white hover:text-gray-300 transition-all duration-300 p-3 rounded-full bg-black/50 hover:bg-black/70 hover:scale-110"
-              aria-label="Previous image"
-            >
+            <button onClick={previousImage} className="absolute left-6 top-1/2 -translate-y-1/2 z-[110] text-white hover:text-gray-300 transition-all duration-300 p-3 rounded-full bg-black/50 hover:bg-black/70 hover:scale-110" aria-label="Previous image">
               <ChevronLeft size={32} />
             </button>
-            <button
-              onClick={nextImage}
-              className="absolute right-6 top-1/2 -translate-y-1/2 z-[110] text-white hover:text-gray-300 transition-all duration-300 p-3 rounded-full bg-black/50 hover:bg-black/70 hover:scale-110"
-              aria-label="Next image"
-            >
+            <button onClick={nextImage} className="absolute right-6 top-1/2 -translate-y-1/2 z-[110] text-white hover:text-gray-300 transition-all duration-300 p-3 rounded-full bg-black/50 hover:bg-black/70 hover:scale-110" aria-label="Next image">
               <ChevronRight size={32} />
             </button>
             <div className="relative w-full h-full max-w-6xl max-h-[90vh] mx-8">
-              <Image
-                src={project.images[currentImageIndex]}
-                alt={`${project.title} - Image ${currentImageIndex + 1}`}
-                fill
-                sizes="100vw"
-                className="object-contain"
-                priority
-              />
+              <Image src={project.images[currentImageIndex]} alt={project.title + " - Image " + (currentImageIndex + 1)} fill sizes="100vw" className="object-contain" priority />
             </div>
             <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-center text-white">
               <h3 className="text-2xl font-light mb-2">{project.title}</h3>
@@ -357,45 +307,25 @@ export default function Home() {
                   <button
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      index === currentImageIndex
-                        ? "bg-white scale-125"
-                        : "bg-white/50 hover:bg-white/75"
-                    }`}
-                    aria-label={`Go to image ${index + 1}`}
+                    className={"w-2 h-2 rounded-full transition-all duration-300 " + (index === currentImageIndex ? "bg-white scale-125" : "bg-white/50 hover:bg-white/75")}
+                    aria-label={"Go to image " + (index + 1)}
                   />
                 ))}
               </div>
-              <p className="text-sm text-gray-400 mt-2">
-                {currentImageIndex + 1} / {project.images.length}
-              </p>
+              <p className="text-sm text-gray-400 mt-2">{currentImageIndex + 1} / {project.images.length}</p>
             </div>
-            <div
-              className="absolute inset-0 -z-10"
-              onClick={closeModal}
-              aria-label="Close gallery"
-            />
+            <div className="absolute inset-0 -z-10" onClick={closeModal} aria-label="Close gallery" />
           </div>
         )}
 
-        {/* Contact Section (unchanged aside from small cleanups) */}
-        <section
-          id="contact"
-          className="py-32 px-8 bg-gray-900 text-white text-center relative overflow-hidden"
-        >
+        {/* Contact Section */}
+        <section id="contact" className="py-32 px-8 bg-gray-900 text-white text-center relative overflow-hidden">
           <div className="absolute inset-0 opacity-5">
-            <div
-              className="absolute inset-0"
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='m36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-              }}
-            />
+            <div className="absolute inset-0" style={{ backgroundImage: gridDataUrl }} />
           </div>
 
           <div className="max-w-6xl mx-auto relative z-10">
-            <h2 className="text-4xl md:text-5xl font-light mb-6 tracking-tight">
-              Get In Touch
-            </h2>
+            <h2 className="text-4xl md:text-5xl font-light mb-6 tracking-tight">Get In Touch</h2>
             <p className="text-xl md:text-2xl text-gray-300 mb-20 font-light max-w-2xl mx-auto">
               {"Ready to start your next project? We'd love to hear from you."}
             </p>
@@ -404,26 +334,16 @@ export default function Home() {
               {/* Contact Info */}
               <div className="text-left space-y-8">
                 <div className="flex items-start gap-4 group">
-                  <MapPin
-                    size={24}
-                    className="text-blue-400 mt-1 group-hover:scale-110 transition-transform duration-300"
-                  />
+                  <MapPin size={24} className="text-blue-400 mt-1 group-hover:scale-110 transition-transform duration-300" />
                   <div className="group-hover:text-blue-100 transition-colors duration-300">
                     <div className="font-medium mb-1">Our Location</div>
-                    <div className="text-gray-300">
-                      1st Floor, Al Nabatieh road, North Nabatieh Factory
-                    </div>
-                    <div className="text-gray-300">
-                      Al Mina, Tripoli, Lebanon
-                    </div>
+                    <div className="text-gray-300">1st Floor, Al Nabatieh road, North Nabatieh Factory</div>
+                    <div className="text-gray-300">Al Mina, Tripoli, Lebanon</div>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-4 group">
-                  <Phone
-                    size={24}
-                    className="text-blue-400 group-hover:scale-110 transition-transform duration-300"
-                  />
+                  <Phone size={24} className="text-blue-400 group-hover:scale-110 transition-transform duration-300" />
                   <div className="group-hover:text-blue-100 transition-colors duration-300">
                     <div className="font-medium mb-1">Call Us</div>
                     <div className="text-gray-300">+961 03/524/144</div>
@@ -431,10 +351,7 @@ export default function Home() {
                 </div>
 
                 <div className="flex items-center gap-4 group">
-                  <Mail
-                    size={24}
-                    className="text-blue-400 group-hover:scale-110 transition-transform duration-300"
-                  />
+                  <Mail size={24} className="text-blue-400 group-hover:scale-110 transition-transform duration-300" />
                   <div className="group-hover:text-blue-100 transition-colors duration-300">
                     <div className="font-medium mb-1">Email Us</div>
                     <div className="text-gray-300">samerosta@bldtech.biz</div>
@@ -445,9 +362,7 @@ export default function Home() {
               {/* Contact Form */}
               <div className="bg-white/5 p-8 rounded-2xl backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
                 <div className="mb-6">
-                  <label className="block mb-3 text-sm text-gray-300 font-medium text-left">
-                    Name *
-                  </label>
+                  <label className="block mb-3 text-sm text-gray-300 font-medium text-left">Name *</label>
                   <input
                     type="text"
                     name="name"
@@ -459,9 +374,7 @@ export default function Home() {
                 </div>
 
                 <div className="mb-6">
-                  <label className="block mb-3 text-sm text-gray-300 font-medium text-left">
-                    Email *
-                  </label>
+                  <label className="block mb-3 text-sm text-gray-300 font-medium text-left">Email *</label>
                   <input
                     type="email"
                     name="email"
@@ -473,9 +386,7 @@ export default function Home() {
                 </div>
 
                 <div className="mb-8">
-                  <label className="block mb-3 text-sm text-gray-300 font-medium text-left">
-                    Message *
-                  </label>
+                  <label className="block mb-3 text-sm text-gray-300 font-medium text-left">Message *</label>
                   <textarea
                     name="message"
                     value={formData.message}
@@ -498,27 +409,15 @@ export default function Home() {
             {/* Social Links */}
             <div className="flex justify-center gap-6 mt-16">
               {[
-                {
-                  icon: Instagram,
-                  label: "Instagram",
-                  color: "hover:bg-pink-600",
-                },
-                {
-                  icon: Facebook,
-                  label: "Facebook",
-                  color: "hover:bg-blue-600",
-                },
-                {
-                  icon: Linkedin,
-                  label: "LinkedIn",
-                  color: "hover:bg-blue-700",
-                },
+                { icon: Instagram, label: "Instagram", color: "hover:bg-pink-600" },
+                { icon: Facebook, label: "Facebook", color: "hover:bg-blue-600" },
+                { icon: Linkedin, label: "LinkedIn", color: "hover:bg-blue-700" },
                 { icon: Twitter, label: "Twitter", color: "hover:bg-sky-500" },
               ].map((social, index) => (
                 <a
                   key={index}
                   href="#"
-                  className={`flex items-center justify-center w-14 h-14 bg-white/10 rounded-full text-white transition-all duration-300 ${social.color} hover:-translate-y-2 hover:shadow-lg cursor-pointer border border-white/20 hover:border-white/40`}
+                  className={"flex items-center justify-center w-14 h-14 bg-white/10 rounded-full text-white transition-all duration-300 " + social.color + " hover:-translate-y-2 hover:shadow-lg cursor-pointer border border-white/20 hover:border-white/40"}
                   title={social.label}
                   aria-label={social.label}
                 >
@@ -530,45 +429,7 @@ export default function Home() {
         </section>
 
         {/* Custom Styles */}
-        <style jsx>{`
-          @keyframes fade-in-up {
-            from {
-              opacity: 0;
-              transform: translateY(40px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-          @keyframes pulse-slow {
-            0%,
-            100% {
-              opacity: 0.7;
-            }
-            50% {
-              opacity: 0.9;
-            }
-          }
-          .animate-fade-in-up {
-            animation: fade-in-up 1s ease-out;
-          }
-          .animate-fade-in-up-delay {
-            animation: fade-in-up 1s ease-out 0.2s both;
-          }
-          .animate-fade-in-up-delay-2 {
-            animation: fade-in-up 1s ease-out 0.4s both;
-          }
-          .animate-pulse-slow {
-            animation: pulse-slow 4s ease-in-out infinite;
-          }
-
-          /* Smooth scrolling */
-          :global(html) {
-            scroll-behavior: smooth;
-            -webkit-text-size-adjust: 100%;
-          }
-        `}</style>
+        <style jsx>{styles}</style>
       </div>
     </>
   );
