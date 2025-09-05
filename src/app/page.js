@@ -9,8 +9,6 @@ import {
   MapPin,
   Instagram,
   Facebook,
-  Linkedin,
-  Twitter,
   Menu,
   X,
   ChevronLeft,
@@ -27,7 +25,10 @@ import {
   Quote,
   Calendar,
   ArrowRight,
+  Paintbrush,
+  PanelsTopLeft,
 } from "lucide-react";
+import { FaTiktok, FaYoutube } from "react-icons/fa";
 import Image from "next/image";
 import Logo from "../app/assets/bldtech.gif";
 import img1 from "../app/assets/img1.jpg";
@@ -58,7 +59,7 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Lock body scroll when mobile menu is open + close on ESC
+  // Lock body scroll when mobile menu or modal is open + close on ESC / arrows
   useEffect(() => {
     if (mobileOpen || modalOpen) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "";
@@ -112,79 +113,79 @@ export default function Home() {
       (p) => (p - 1 + project.images.length) % project.images.length
     );
 
-  // Data for new sections
+  // Services — replaced with your real offerings
   const services = [
     {
-      icon: Building,
-      title: "Architectural Design",
-      description:
-        "Innovative and sustainable design solutions tailored to your vision and needs.",
-    },
-    {
       icon: Wrench,
-      title: "Construction Management",
+      title: "Renovation & Waterproofing",
       description:
-        "End-to-end project management ensuring quality, timeline, and budget adherence.",
+        "Full-scope renovations with professional waterproofing for roofs, pools, basements, and wet areas to stop leaks and extend lifespan.",
     },
     {
-      icon: ClipboardList,
-      title: "Project Consulting",
+      icon: Building,
+      title: "Civil Work & Consultation",
       description:
-        "Expert guidance and strategic planning for complex architectural projects.",
+        "Concrete works, structural fixes, site execution, and technical consulting to scope, plan, and deliver projects safely and on time.",
     },
     {
-      icon: Lightbulb,
-      title: "Design Innovation",
+      icon: Paintbrush,
+      title: "Exterior & Interior Design",
       description:
-        "Cutting-edge design solutions using the latest technology and sustainable practices.",
+        "Functional, modern finishes and layouts — facades, partitions, ceilings, lighting, and materials that look good and last.",
+    },
+    {
+      icon: PanelsTopLeft,
+      title: "Certified PDLC Film Installer & Distributor",
+      description:
+        "Supply and certified installation of PDLC smart film for instant privacy glass — offices, clinics, homes, and showrooms.",
     },
   ];
 
   const teamMembers = [
     {
       name: "Samer Osta",
-      role: "Founder & Lead Architect",
+      role: "Founder & Lead Engineer",
       image:
         "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
       description:
-        "With over 15 years of experience in architectural design and project management.",
+        "15+ years delivering durable renovations, waterproofing systems, and turnkey civil works.",
     },
     {
       name: "Sarah Mitchell",
-      role: "Senior Project Manager",
+      role: "Project Manager",
       image:
         "https://images.unsplash.com/photo-1494790108755-2616b612b5bc?w=400&h=400&fit=crop&crop=face",
       description:
-        "Specializes in large-scale commercial and residential project coordination.",
+        "Schedules, budgets, and site coordination to keep execution tight and predictable.",
     },
     {
       name: "Ahmed Hassan",
-      role: "Design Director",
+      role: "Design Lead",
       image:
         "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
       description:
-        "Expert in sustainable design and innovative architectural solutions.",
+        "Exterior/interior concepts with a practical eye for materials, detailing, and maintenance.",
     },
   ];
 
   const testimonials = [
     {
       quote:
-        "BLDTECH transformed our vision into reality. Their attention to detail and innovative approach exceeded our expectations.",
+        "BLDTECH stopped our roof leaks and renovated our duplex perfectly. Professional and fast.",
       author: "Maria Rodriguez",
       company: "Luxury Homes LLC",
       rating: 5,
     },
     {
       quote:
-        "Professional, reliable, and creative. The team at BLDTECH delivered our project on time and within budget.",
+        "Civil works delivered to spec and on schedule. Clear scope, zero surprises.",
       author: "James Thompson",
       company: "Commercial Developments",
       rating: 5,
     },
     {
       quote:
-        "Outstanding architectural solutions. Their design process is collaborative and results-driven.",
+        "Their PDLC smart film install was flawless — glass goes from clear to private instantly.",
       author: "Nadia Al-Mahmoud",
       company: "Resort Properties",
       rating: 5,
@@ -198,36 +199,6 @@ export default function Home() {
     "Urban Planning Corp",
     "Green Building Initiative",
     "Modern Living Spaces",
-  ];
-
-  const blogPosts = [
-    {
-      title: "Sustainable Architecture: The Future of Building Design",
-      excerpt:
-        "Exploring eco-friendly design principles and their impact on modern construction.",
-      date: "2024-08-15",
-      author: "Samer Osta",
-      image:
-        "https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=600&h=400&fit=crop",
-    },
-    {
-      title: "Maximizing Small Spaces: Design Tips for Urban Living",
-      excerpt:
-        "Creative solutions for making the most of limited space in city environments.",
-      date: "2024-08-01",
-      author: "Sarah Mitchell",
-      image:
-        "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&h=400&fit=crop",
-    },
-    {
-      title: "The Art of Pool Design: Creating Aquatic Masterpieces",
-      excerpt:
-        "Behind the scenes of our premium pool collection and design philosophy.",
-      date: "2024-07-20",
-      author: "Ahmed Hassan",
-      image:
-        "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=600&h=400&fit=crop",
-    },
   ];
 
   // CSS moved to a plain string (no template literals), then injected.
@@ -297,35 +268,29 @@ export default function Home() {
 
             {/* Desktop links */}
             <ul className="hidden md:flex space-x-8 list-none m-0 p-0">
-              {[
-                "Home",
-                "About",
-                "Services",
-                // "Team",
-                // "Projects",
-                // "Blog",
-                // "Contact",
-              ].map((item) => (
-                <li key={item}>
-                  <button
-                    onClick={() =>
-                      scrollToSection(
-                        item.toLowerCase() === "home"
-                          ? "hero"
-                          : item.toLowerCase()
-                      )
-                    }
-                    className={
-                      "font-medium transition-colors duration-300 bg-transparent border-none cursor-pointer text-base " +
-                      (isScrolled
-                        ? "text-white/80 hover:text-blue-400"
-                        : "text-white/90 hover:text-white")
-                    }
-                  >
-                    {item}
-                  </button>
-                </li>
-              ))}
+              {["About", "Services", "Projects", "Process", "Contact"].map(
+                (item) => (
+                  <li key={item}>
+                    <button
+                      onClick={() =>
+                        scrollToSection(
+                          item.toLowerCase() === "home"
+                            ? "hero"
+                            : item.toLowerCase()
+                        )
+                      }
+                      className={
+                        "font-medium transition-colors duration-300 bg-transparent border-none cursor-pointer text-base " +
+                        (isScrolled
+                          ? "text-white/80 hover:text-blue-400"
+                          : "text-white/90 hover:text-white")
+                      }
+                    >
+                      {item}
+                    </button>
+                  </li>
+                )
+              )}
             </ul>
 
             {/* Mobile burger */}
@@ -374,9 +339,8 @@ export default function Home() {
                   "Home",
                   "About",
                   "Services",
-                  "Team",
                   "Projects",
-                  "Blog",
+                  "Process",
                   "Contact",
                 ].map((item) => (
                   <li key={item}>
@@ -409,25 +373,28 @@ export default function Home() {
             paddingBottom: "max(2rem, env(safe-area-inset-bottom))",
           }}
         >
-          {/* Dark overlay */}
+          {/* Dark overlays */}
           <div className="absolute inset-0 bg-black/60" />
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/70 via-transparent to-gray-900/70 animate-pulse-slow" />
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/60 via-transparent to-gray-900/70 animate-pulse-slow" />
+
           <div className="relative max-w-4xl px-8 z-10">
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light mb-6 leading-tight tracking-tight animate-fade-in-up">
-              Architects with a different approach
+              Renovation, Waterproofing, Civil Works & PDLC Film
             </h1>
             <p className="text-lg sm:text-xl md:text-2xl font-light mb-12 opacity-90 leading-relaxed max-w-3xl mx-auto animate-fade-in-up-delay">
-              We design through our conceptual ethos that the greatest solutions
-              shine through. Enjoy your life now.
+              BLDTECH delivers durable renovations, certified waterproofing,
+              civil work & consultation, exterior/interior design, and certified
+              PDLC smart film installation & distribution.
             </p>
             <button
               onClick={() => scrollToSection("about")}
-              className="inline-flex items-center gap-3 px-8 sm:px-10 py-4 sm:py-5 bg-white/10 border-2 border-white/30 rounded-full text-white font-medium text-base sm:text-lg transition-all duration-500 hover:bg-white/20 hover:-translate-y-2 hover:shadow-2xl backdrop-blur-sm animate-fade-in-up-delay-2 hover:border-white/50 cursor-pointer"
+              className="inline-flex items-center gap-3 px-8 sm:px-10 py-4 sm:py-5 bg-white/10 border-2 border-white/30 rounded-full text-white font-medium text-base sm:text-lg transition-all duration-500 hover:bg白/20 hover:-translate-y-2 hover:shadow-2xl backdrop-blur-sm animate-fade-in-up-delay-2 hover:border-white/50 cursor-pointer"
             >
               Discover Our Story
               <ChevronDown size={20} className="animate-bounce" />
             </button>
           </div>
+
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
             <ChevronDown size={28} color="white" className="opacity-70" />
           </div>
@@ -442,15 +409,15 @@ export default function Home() {
                   About BLDTECH
                 </h2>
                 <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                  Founded on the principle that exceptional design transforms
-                  lives, BLDTECH is a leading architectural firm specializing in
-                  innovative solutions for residential, commercial, and luxury
-                  projects.
+                  BLDTECH is a specialized engineering and contracting company
+                  focused on Renovation & Waterproofing, Civil Work &
+                  Consultation, Exterior & Interior Design, and certified PDLC
+                  smart film installation and distribution.
                 </p>
                 <p className="text-lg text-gray-600 mb-12 leading-relaxed">
-                  Our team combines decades of experience with cutting-edge
-                  technology and sustainable practices to create spaces that not
-                  only inspire but also respect our environment and community.
+                  We combine practical engineering, quality materials, and clean
+                  design to deliver long-lasting, low-maintenance results for
+                  residential and commercial projects across Lebanon.
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -464,9 +431,9 @@ export default function Home() {
                         Our Mission
                       </h3>
                       <p className="text-gray-600">
-                        To create exceptional architectural solutions that
-                        enhance lives and communities through innovative design
-                        and sustainable practices.
+                        Deliver reliable builds and finishes that solve problems
+                        the first time — waterproofing that holds, civil work
+                        that lasts, and design that functions.
                       </p>
                     </div>
                   </div>
@@ -481,9 +448,8 @@ export default function Home() {
                         Our Vision
                       </h3>
                       <p className="text-gray-600">
-                        To be the premier architectural firm recognized for
-                        transforming spaces into extraordinary experiences that
-                        stand the test of time.
+                        Be the preferred partner for durable renovation, civil
+                        execution, and smart privacy solutions.
                       </p>
                     </div>
                   </div>
@@ -494,14 +460,14 @@ export default function Home() {
                 <div className="relative h-96 md:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
                   <Image
                     src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&h=600&fit=crop"
-                    alt="BLDTECH Office"
+                    alt="BLDTECH Projects"
                     fill
                     className="object-cover"
                   />
                 </div>
                 <div className="absolute -bottom-8 -left-8 bg-blue-600 text-white p-8 rounded-2xl shadow-xl">
                   <div className="text-3xl font-bold">15+</div>
-                  <div className="text-sm opacity-90">Years of Excellence</div>
+                  <div className="text-sm opacity-90">Years of Experience</div>
                 </div>
                 <div className="absolute -top-8 -right-8 bg-white text-gray-900 p-8 rounded-2xl shadow-xl">
                   <div className="text-3xl font-bold text-blue-600">200+</div>
@@ -520,7 +486,8 @@ export default function Home() {
                 Our Services
               </h2>
               <p className="text-xl md:text-2xl text-gray-600 font-light max-w-3xl mx-auto">
-                Comprehensive architectural solutions from concept to completion
+                Renovation & Waterproofing • Civil Work & Consultation •
+                Exterior & Interior Design • PDLC Smart Film
               </p>
             </div>
 
@@ -558,57 +525,14 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Team Section */}
-        <section id="team" className="py-32 px-8 bg-white">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-20">
-              <h2 className="text-4xl md:text-5xl font-light mb-6 text-gray-900 tracking-tight">
-                Meet Our Team
-              </h2>
-              <p className="text-xl md:text-2xl text-gray-600 font-light max-w-3xl mx-auto">
-                Passionate professionals dedicated to bringing your vision to
-                life
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-              {teamMembers.map((member, index) => (
-                <div
-                  key={index}
-                  className="group text-center hover:-translate-y-4 transition-all duration-500"
-                >
-                  <div className="relative mb-6 mx-auto w-48 h-48">
-                    <Image
-                      src={member.image}
-                      alt={member.name}
-                      fill
-                      className="object-cover rounded-full shadow-lg group-hover:shadow-2xl transition-shadow duration-500"
-                    />
-                    <div className="absolute inset-0 rounded-full bg-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  </div>
-                  <h3 className="text-2xl font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">
-                    {member.name}
-                  </h3>
-                  <p className="text-blue-600 font-medium mb-4">
-                    {member.role}
-                  </p>
-                  <p className="text-gray-600 leading-relaxed">
-                    {member.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Projects Section */}
         <section id="projects" className="py-32 px-8 bg-gray-50 text-center">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-light mb-6 text-gray-900 tracking-tight">
-              Our Featured Project
+              Recent Work
             </h2>
             <p className="text-xl md:text-2xl text-gray-600 mb-12 font-light max-w-2xl mx-auto">
-              Precast swimming pools and architectural solutions
+              Waterproofing, civil fixes, and clean design — executed properly
             </p>
 
             {/* YouTube Video Player */}
@@ -617,8 +541,8 @@ export default function Home() {
                 <iframe
                   width="100%"
                   height="100%"
-                  src="https://www.youtube.com/embed/LD6-kU-LPxU?si=PAlKSRxbUDv6t0e3&controls=1"
-                  title="Featured Project Video"
+                  src="https://www.youtube.com/embed/LD6-kU-LPxU?controls=1"
+                  title="Project Video"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   referrerPolicy="strict-origin-when-cross-origin"
@@ -675,7 +599,7 @@ export default function Home() {
                 What Our Clients Say
               </h2>
               <p className="text-xl md:text-2xl font-light opacity-90 max-w-3xl mx-auto">
-                Trusted by leading companies and satisfied homeowners
+                Trusted by homeowners and businesses
               </p>
             </div>
 
@@ -739,8 +663,8 @@ export default function Home() {
                 Our Process
               </h2>
               <p className="text-xl md:text-2xl text-gray-600 font-light max-w-3xl mx-auto">
-                From initial consultation to final delivery, we guide you
-                through every step of your architectural journey
+                From first call to final handover — clear scope, clean
+                execution, solid results
               </p>
             </div>
 
@@ -754,7 +678,7 @@ export default function Home() {
                     step: "01",
                     title: "Discovery & Consultation",
                     description:
-                      "We begin with an in-depth consultation to understand your vision, needs, budget, and timeline. This foundational phase ensures every detail is captured.",
+                      "We scope your needs, constraints, and timeline — then propose clear options and a realistic plan.",
                     icon: Users,
                     position: "left",
                   },
@@ -762,31 +686,31 @@ export default function Home() {
                     step: "02",
                     title: "Design & Planning",
                     description:
-                      "Our team creates detailed architectural plans, 3D renderings, and technical drawings. We collaborate closely with you to refine every aspect of the design.",
+                      "Technical details, materials, and milestones locked. We align on budget and deliverables.",
                     icon: Lightbulb,
                     position: "right",
                   },
                   {
                     step: "03",
-                    title: "Approval & Permits",
+                    title: "Approvals & Prep",
                     description:
-                      "We handle all necessary permits, approvals, and regulatory requirements, ensuring your project meets all local building codes and standards.",
+                      "Permits (if needed), site readiness, and logistics are handled to avoid delays later.",
                     icon: ClipboardList,
                     position: "left",
                   },
                   {
                     step: "04",
-                    title: "Construction Management",
+                    title: "Execution & Management",
                     description:
-                      "Our experienced project managers oversee every aspect of construction, maintaining quality standards while keeping your project on schedule and within budget.",
+                      "Civil works, waterproofing, and finishes executed to spec with tight site supervision.",
                     icon: Building,
                     position: "right",
                   },
                   {
                     step: "05",
-                    title: "Quality Assurance & Delivery",
+                    title: "Quality Check & Handover",
                     description:
-                      "Before handover, we conduct thorough quality inspections and provide comprehensive documentation, ensuring everything exceeds your expectations.",
+                      "Final inspection, documentation, and guidance on maintenance. We deliver it right.",
                     icon: Award,
                     position: "left",
                   },
@@ -806,7 +730,7 @@ export default function Home() {
                       }`}
                     >
                       <div className="group">
-                        {/* Step number (always visible on mobile, side on desktop) */}
+                        {/* Step number (mobile) */}
                         <div className="mb-4 md:mb-0 flex justify-center md:justify-start md:hidden">
                           <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">
                             {item.step}
@@ -832,7 +756,7 @@ export default function Home() {
                       </div>
                     </div>
 
-                    {/* Step number desktop (side circle) */}
+                    {/* Step number (desktop) */}
                     <div className="hidden md:block">
                       <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-xl group-hover:bg-blue-700 transition-all duration-300 group-hover:scale-110">
                         {item.step}
@@ -844,7 +768,7 @@ export default function Home() {
                       <div className="hidden md:block w-4 h-4 bg-blue-600 rounded-full border-4 border-white shadow-lg"></div>
                     </div>
 
-                    <div className="flex-1"></div>
+                    <div className="flex-1" />
                   </div>
                 ))}
               </div>
@@ -856,14 +780,13 @@ export default function Home() {
                   Ready to Start Your Project?
                 </h3>
                 <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
-                  {
-                    " Every great project begins with a conversation. Let's discuss how we can bring your architectural vision to life."
-                  }
+                  Every great project begins with a conversation. Let&apos;s
+                  discuss how we can help.
                 </p>
                 <button
                   onClick={() =>
                     window.open(
-                      "https://wa.me/96103524144?text=Hello,%20I%20would%20like%20to%20schedule%20a%20consultation%20please!",
+                      "https://wa.me/96103524144?text=Hello%2C%20I%20would%20like%20to%20schedule%20a%20consultation%20please%21",
                       "_blank"
                     )
                   }
@@ -961,7 +884,7 @@ export default function Home() {
               Get In Touch
             </h2>
             <p className="text-xl md:text-2xl text-gray-300 mb-20 font-light max-w-2xl mx-auto">
-              {"Ready to start your next project? We'd love to hear from you."}
+              Ready to start your next project? We&apos;d love to hear from you.
             </p>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
@@ -1066,22 +989,32 @@ export default function Home() {
                   icon: Instagram,
                   label: "Instagram",
                   color: "hover:bg-pink-600",
+                  url: "https://www.instagram.com/bldtech.lb",
                 },
                 {
                   icon: Facebook,
                   label: "Facebook",
                   color: "hover:bg-blue-600",
+                  url: "https://www.facebook.com/bldtech",
                 },
                 {
-                  icon: Linkedin,
-                  label: "LinkedIn",
-                  color: "hover:bg-blue-700",
+                  icon: FaTiktok,
+                  label: "TikTok",
+                  color: "hover:bg-pink-500",
+                  url: "https://www.tiktok.com/@bldtech",
                 },
-                { icon: Twitter, label: "Twitter", color: "hover:bg-sky-500" },
+                {
+                  icon: FaYoutube,
+                  label: "YouTube",
+                  color: "hover:bg-red-600",
+                  url: "https://www.youtube.com/@Bldtech",
+                },
               ].map((social, index) => (
                 <a
                   key={index}
-                  href="#"
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={
                     "flex items-center justify-center w-14 h-14 bg-white/10 rounded-full text-white transition-all duration-300 " +
                     social.color +
@@ -1104,63 +1037,30 @@ export default function Home() {
               {/* Company Info */}
               <div className="md:col-span-2">
                 <div className="mb-6">
-                  <Image
-                    src={Logo}
-                    alt="BLDTECH"
-                    width={150}
-                    height={42}
-                    className=""
-                  />
+                  <Image src={Logo} alt="BLDTECH" width={150} height={42} />
                 </div>
                 <p className="text-gray-400 leading-relaxed mb-6 max-w-md">
-                  BLDTECH is a leading architectural firm specializing in
-                  innovative design solutions for residential, commercial, and
-                  luxury projects. We transform visions into reality through
-                  exceptional design and craftsmanship.
+                  Renovation & Waterproofing • Civil Work & Consultation •
+                  Exterior & Interior Design • Certified PDLC Smart Film
                 </p>
-                <div className="flex gap-4">
-                  {[
-                    { icon: Instagram, color: "hover:text-pink-400" },
-                    { icon: Facebook, color: "hover:text-blue-400" },
-                    { icon: Linkedin, color: "hover:text-blue-400" },
-                    { icon: Twitter, color: "hover:text-sky-400" },
-                  ].map((social, index) => (
-                    <a
-                      key={index}
-                      href="#"
-                      className={
-                        "text-gray-400 transition-colors duration-300 " +
-                        social.color
-                      }
-                      aria-label="Social media link"
-                    >
-                      <social.icon size={24} />
-                    </a>
-                  ))}
-                </div>
               </div>
 
               {/* Quick Links */}
               <div>
                 <h3 className="font-semibold mb-6">Quick Links</h3>
                 <ul className="space-y-3">
-                  {[
-                    "About",
-                    "Services",
-                    "Team",
-                    "Projects",
-                    "Process",
-                    "Contact",
-                  ].map((item) => (
-                    <li key={item}>
-                      <button
-                        onClick={() => scrollToSection(item.toLowerCase())}
-                        className="text-gray-400 hover:text-white transition-colors duration-300 bg-transparent border-none cursor-pointer text-left"
-                      >
-                        {item}
-                      </button>
-                    </li>
-                  ))}
+                  {["About", "Services", "Projects", "Process", "Contact"].map(
+                    (item) => (
+                      <li key={item}>
+                        <button
+                          onClick={() => scrollToSection(item.toLowerCase())}
+                          className="text-gray-400 hover:text-white transition-colors duration-300 bg-transparent border-none cursor-pointer text-left"
+                        >
+                          {item}
+                        </button>
+                      </li>
+                    )
+                  )}
                 </ul>
               </div>
 
@@ -1198,26 +1098,6 @@ export default function Home() {
               <p className="text-gray-400 text-sm">
                 © 2025 BLDTECH. All rights reserved.
               </p>
-              {/* <div className="flex gap-6 text-sm">
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors duration-300"
-                >
-                  Privacy Policy
-                </a>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors duration-300"
-                >
-                  Terms of Service
-                </a>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors duration-300"
-                >
-                  Cookie Policy
-                </a>
-              </div> */}
             </div>
           </div>
         </footer>
